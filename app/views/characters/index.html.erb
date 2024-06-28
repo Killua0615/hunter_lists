@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+      .image-container {
+        max-width: 500px; /* 任意の幅に変更 */
+        margin: 0 auto;
+      }
+      .image-container img {
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm justify-content-between">
+      <h5 class="my-0 mr-md-auto font-weight-normal">HUNTER×HUNTER character lists</h5>
+      <a href="<%= new_character_path %>" class="btn btn-primary my-2 my-sm-0">Add new character</a>
+    </div>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <div class="container mt-5">
+      <div class="row">
+        <% Character.all.each do |character| %>
+          <div class="col-md-6 mb-4">
+            <div class="image-container">
+              <% if character.image.attached? %>
+                <%= link_to character_path(character) do %>
+                  <%= image_tag rails_blob_url(character.image), class: "img-fluid", alt: "Image #{character.name}" %>
+                <% end %>
+              <% else %>
+                <p>No image available for <%= character.name %></p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  
+  
+  
+
+    <%= yield %>
+  </body>
+</html>
